@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const unsplash = axios.create({
   baseURL: 'https://api.unsplash.com',
+  // baseURL: 'http://localhost:5000',
   timeout: 5000,
   headers: {
     Authorization: `Client-ID`
@@ -10,7 +11,7 @@ const unsplash = axios.create({
 
 function searchUnslpash(searchTerm, page = 1, callback) {
   unsplash
-    .get('/search/photos', {
+    .get('/', {
       params: {
         query: searchTerm,
         page,

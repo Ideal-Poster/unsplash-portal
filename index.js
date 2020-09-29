@@ -1,9 +1,5 @@
 import searchUnslpash from './api/requests'
-
 import ImageList from './components/ImageList'
-// require('./api/unsplash');
-
-// const button = document.getElementById('button');
 
 let page = 1
 let isAnimating = false
