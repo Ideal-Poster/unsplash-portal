@@ -4,22 +4,26 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 require('dotenv').config();
 
 // Configuration
-const { PROXY_HOST, PROXY_PORT } = process.env;
+const { PROXY_HOST, PROXY_PORT, APP_PORT } = process.env;
 const PORT = PROXY_PORT || 5000;
 const HOST = PROXY_HOST || 'localhost';
 
 // Logging
 app.use(morgan('dev'));
 
+// proxy middleware options
+var filter = function(pathname, req) {
+  // Only allow requests from specific origins
+  return req.headers.origin === `http://${HOST}:${APP_PORT}` || req.headers.origin === `https://${HOST}:${APP_PORT}`;
+};
+
 // Proxy endpoint
 app.use(
   '/api',
-  createProxyMiddleware({
+  createProxyMiddleware(filter, {
     target: 'https://api.unsplash.com',
     changeOrigin: true,
-    pathRewrite: {
-      [`^/api`]: 'search/photos/'
-    },
+    pathRewrite: { [`^/api`]: 'search/photos/' },
     headers: { Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}` }
   })
 );

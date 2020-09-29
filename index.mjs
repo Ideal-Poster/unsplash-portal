@@ -6,4 +6,4 @@ let isAnimating = false;
 let imageElements = [];
 
 const imageList = new ImageList(document.querySelector('#image__list'));
-searchUnslpash('hello', page, imageList.renderImages);
+// searchUnslpash('hello', page, imageList.renderImages);
