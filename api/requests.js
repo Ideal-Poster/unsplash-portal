@@ -1,8 +1,8 @@
 import axios from 'axios'
 
+const { PROXY_HOST, PROXY_PORT } = process.env
 const unsplash = axios.create({
-  baseURL: 'https://api.unsplash.com',
-  // baseURL: 'http://localhost:5000',
+  baseURL: PROXY_HOST + PROXY_PORT || 'http://localhost:5000',
   timeout: 5000,
   headers: {
     Authorization: `Client-ID`

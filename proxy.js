@@ -3,8 +3,9 @@ const morgan = require('morgan')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
 // Configuration
-const PORT = 5000
-const HOST = 'localhost'
+const { PROXY_HOST, PROXY_PORT } = process.env
+const PORT = PROXY_PORT || 5000
+const HOST = PROXY_HOST || 'localhost'
 
 // Logging
 app.use(morgan('dev'))
