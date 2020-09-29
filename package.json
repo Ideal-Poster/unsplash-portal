@@ -1,17 +1,22 @@
 {
   "name": "search-unsplash",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.mjs",
   "license": "MIT",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs"
+  },
   "scripts": {
-    "dev": "parcel index.html",
-    "build": "parcel build index.js"
+    "dev": "concurrently --kill-others-on-fail \"parcel index.html\"  \"nodemon proxy\"",
+    "proxy": "nodemon proxy",
+    "build": "parcel build index.mjs"
   },
   "devDependencies": {
     "husky": "^1.1.2",
+    "nodemon": "^2.0.4",
     "prettier": "^1.14.3",
-    "pretty-quick": "^1.8.0",
-    "nodemon": "^2.0.4"
+    "pretty-quick": "^1.8.0"
   },
   "husky": {
     "hooks": {
@@ -20,6 +25,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.5",

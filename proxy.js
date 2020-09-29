@@ -1,14 +1,15 @@
-const app = require('express')()
-const morgan = require('morgan')
-const { createProxyMiddleware } = require('http-proxy-middleware')
+const app = require('express')();
+const morgan = require('morgan');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+require('dotenv').config();
 
 // Configuration
-const { PROXY_HOST, PROXY_PORT } = process.env
-const PORT = PROXY_PORT || 5000
-const HOST = PROXY_HOST || 'localhost'
+const { PROXY_HOST, PROXY_PORT } = process.env;
+const PORT = PROXY_PORT || 5000;
+const HOST = PROXY_HOST || 'localhost';
 
 // Logging
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 
 // Proxy endpoint
 app.use(
@@ -19,11 +20,11 @@ app.use(
     pathRewrite: {
       [`^/api`]: 'search/photos/'
     },
-    headers: { Authorization: `Client-ID ${process.env.UNSPLASH_API_URL}` }
+    headers: { Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}` }
   })
-)
+);
 
 // Start the Proxy
 app.listen(PORT, HOST, () => {
-  console.log(`Starting Proxy at ${HOST}:${PORT}`)
-})
+  console.log(`Starting Proxy at ${HOST}:${PORT}`);
+});
