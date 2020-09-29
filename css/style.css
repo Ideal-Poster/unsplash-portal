@@ -14,9 +14,8 @@ html {
 }
 
 #title__text {
-  position: absolute;
-  left: 40px;
-  top: 20px;
+  padding-left: 40px;
+  padding-top: 20px;
   color: #242424;
   line-height: 1.4;
 }
