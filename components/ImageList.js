@@ -1,20 +1,20 @@
-let imageElements = [];
-let page = 1;
+import Image from './Image';
 
 export default function ImageList(el) {
+  let imageElements = [];
+  let page = 1;
   const DOM = { el };
 
-  function renderImages(images) {
+  function renderImages(res) {
     // reset images if new search
     if (page === 1) {
       imageElements = [];
       DOM.el.innerHTML = '';
     }
     // add images to DOM
-    images.map(image => {
-      imageElements.push(image);
-      DOM.el.innerHTML += `<p>poop</p>
-        <img src="${image.urls.regular}"/>`;
+    res.map((obj, idx) => {
+      imageElements.push(obj);
+      new Image(obj, idx).render();
     });
   }
 
