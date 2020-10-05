@@ -1,4 +1,3 @@
-import anime from 'animejs';
 import imagesLoaded from 'imagesloaded';
 import Masonry from 'masonry-layout';
 import searchUnslpash from './api/requests';

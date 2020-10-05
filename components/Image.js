@@ -1,38 +1,44 @@
-// const images = [];
+// 'use strict';
+import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 
-class Image {
-  // let spans = 0;
-  constructor(obj, idx) {
-    this.DOM = { el: null };
-    this.container = null;
-    this.idx = idx;
-    this.obj = obj;
+const e = React.createElement;
 
-    // setTimeout(() => {
+function LikeButton() {
+  let imageRef = React.useRef(null);
+  useEffect(() => {
+    //   imageRef = React.createRef(null);
+    // console.log(imageRef);
+    calcSpans();
+  }, []);
 
-    this.init();
-    // }, 2000);
-  }
+  const [spans, setSpans] = useState(0);
 
-  init = () => {
-    this.container = document.querySelector('#image__list');
-    window.addEventListener('resize', () => {
-      this.DOM.el.setAttribute('style', 'padding: 40px');
-    });
+  const calcSpans = () => {
+    const height = imageRef.current.clientHeight;
+    const spans = Math.ceil(height / 100 + 0.5);
+    setSpans(spans);
+    console.log(spans);
   };
 
-  render = () => {
-    this.container.innerHTML += `
-      <div class="grid-item search-result-${this.idx}">
-        <img src="${this.obj.urls.regular}"/>
-      </div>
-    `;
-    // save element to instance of image object
-    this.DOM.el = document.querySelector(`.search-result-${this.idx}`);
-  };
-
-  // init()
-  // return ({render})
+  return (
+    // e("img", {
+    //   stlye: { gridRowEnd: `span ${spans}` },
+    //   className: '',
+    //   alt: 'hello',
+    //   src: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80',
+    //   ref: imageRef
+    // })
+    <div style={{ gridRowEnd: `span ${spans}` }}>
+      <img
+        // onClick={ () => this.modalClick(index) }
+        // className={classTitles}
+        ref={imageRef}
+        // alt={description}
+        src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80"
+      />
+    </div>
+  );
 }
 
-export default Image;
+export default LikeButton;

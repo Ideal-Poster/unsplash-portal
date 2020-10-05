@@ -29,6 +29,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.5",
-    "morgan": "^1.10.0"
+    "imagesloaded": "^4.1.4",
+    "masonry-layout": "^4.2.2",
+    "morgan": "^1.10.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
