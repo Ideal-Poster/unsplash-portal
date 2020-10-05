@@ -1,8 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import LikeButton from './Image';
-
-const e = React.createElement;
+import Image from './Image';
 
 export default function ImageList(el) {
   let imageElements = [];
@@ -16,8 +14,7 @@ export default function ImageList(el) {
       DOM.el.innerHTML = '';
     }
 
-    const images = res.map(() => <LikeButton />);
-    console.log(images);
+    const images = res.map(obj => <Image key={obj.id} />);
     ReactDOM.render(images, el);
   }
 

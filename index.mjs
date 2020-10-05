@@ -1,5 +1,3 @@
-import imagesLoaded from 'imagesloaded';
-import Masonry from 'masonry-layout';
 import searchUnslpash from './api/requests';
 import ImageList from './components/ImageList';
 
@@ -21,26 +19,7 @@ const animeOpts = {
   translateY: [400, 0]
 };
 
-// const grid = document.querySelector('#grid');
-// const body = document.body;
-// var elem = document.querySelector('.grid');
-
-// imagesLoaded(body, function() {
-//   new Masonry(elem, {
-//     itemSelector: '.grid__item',
-//     columnWidth: '.grid__sizer',
-//     percentPosition: true,
-//     transitionDuration: 0
-//   });
-// })
-
 const gridContainer = document.querySelector('#image__list');
 const imageList = new ImageList(gridContainer);
 
-// anime(animeOpts)
 searchUnslpash('hello', 1, imageList.renderImages);
-
-// console.log(ImageList.);
-
-// let test = document.querySelector('#image__list');
-// window.addEventListener('resize', () => { test.style.height = '500px' } )
