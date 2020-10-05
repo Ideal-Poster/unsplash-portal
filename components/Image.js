@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import imagesLoaded from 'imagesloaded';
 import { debounce } from '../utils';
 
-function Image({ src }) {
+function Image({ src, idx }) {
   let imageRef = useRef(null);
   useEffect(() => {
     imagesLoaded(imageRef, calcSpans);
@@ -29,7 +29,7 @@ function Image({ src }) {
   };
 
   return (
-    <div style={{ gridRowEnd: `span ${spans}` }}>
+    <div className={`search-result search-result-${idx}`} style={{ gridRowEnd: `span ${spans}` }}>
       <img
         ref={imageRef}
         // alt={description}
