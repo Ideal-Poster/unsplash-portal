@@ -3,10 +3,7 @@ import axios from 'axios';
 const { PROXY_HOST, PROXY_PORT } = process.env;
 const unsplash = axios.create({
   baseURL: PROXY_HOST + PROXY_PORT || 'http://localhost:5000',
-  timeout: 5000,
-  headers: {
-    Authorization: `Client-ID`
-  }
+  timeout: 5000
 });
 
 function searchUnslpash(searchTerm, page = 1, callback) {

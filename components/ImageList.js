@@ -14,11 +14,9 @@ export default function ImageList(el) {
       DOM.el.innerHTML = '';
     }
 
-    const images = res.map(obj => <Image key={obj.id} />);
+    const images = res.map(obj => <Image src={obj.urls.regular} key={obj.id} />);
     ReactDOM.render(images, el);
   }
 
   return { renderImages: renderImages };
 }
-
-// ReactDOM.render(e(Image), domContainer);
