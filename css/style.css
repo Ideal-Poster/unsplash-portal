@@ -34,7 +34,7 @@ html {
 }
 
 /* Search bar */
-.form {
+#search__form {
   top: 40px;
   right: 50%;
   position: absolute;
@@ -94,14 +94,13 @@ input:focus {
   grid-gap: 0 20px;
   grid-auto-rows: 100px;
   text-align: center;
-  padding: 10px 140px 0px 140px;
+  padding: 25px 140px 0px 140px;
   overflow: hidden;
 }
 
 #image__list img {
   display: flex;
   width: 100%;
-  /* opacity: 0; */
 }
 
 .grid-item {

@@ -1,52 +1,34 @@
 import ReactDOM from 'react-dom';
-import React from 'react';
-import anime from 'animejs';
+import React, { useEffect, useState } from 'react';
 
 import Image from './Image';
+import searchUnslpash from '../api/requests';
 
-export default function ImageList(el) {
-  let imageElements = [];
+function ImageList() {
+  // let imageElements = [];
   let page = 1;
-  const DOM = { el };
+  const [imageElements, setImageElements] = useState([]);
 
-  function renderImages(res) {
-    // reset images if new search
-    if (page === 1) {
-      imageElements = [];
-      DOM.el.innerHTML = '';
-    }
+  useEffect(() => {
+    getImages();
+  }, []);
 
-    const images = res.map((obj, idx) => {
-      return <Image idx={idx} src={obj.urls.regular} key={obj.id} />;
-    });
-    ReactDOM.render(images, el);
-    setTimeout(() => revealImages(), 1000);
-  }
+  const getImages = async page => {
+    const response = await searchUnslpash('hello');
+    setImageElements(current => [...current, ...response.results]);
+  };
 
-  function revealImages() {
-    const searchResults = Array.from(el.querySelectorAll('.search-result'));
-    const newResults = searchResults.slice(-20, searchResults.length);
-    // newResults.map(element => imageElements.push(element));
+  const images = imageElements.map((res, i) => {
+    console.log(res.id);
+    return <Image src={res.urls.regular} idx={i} />;
+  });
 
-    anime({
-      targets: newResults,
-      duration: function(t, i) {
-        return 500 + i * 50;
-      },
-      easing: 'easeOutExpo',
-      delay: function(t, i) {
-        return i * 20;
-      },
-      opacity: {
-        value: [0, 1],
-        duration: function(t, i) {
-          return 250 + i * 50;
-        },
-        easing: 'linear'
-      },
-      translateY: [400, 0]
-    });
-  }
-
-  return { renderImages };
+  return (
+    <>
+      {images}
+      <div className="loader" />
+    </>
+  );
 }
+
+export default ImageList;

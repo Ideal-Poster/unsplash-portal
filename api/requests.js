@@ -6,20 +6,19 @@ const unsplash = axios.create({
   timeout: 5000
 });
 
-function searchUnslpash(searchTerm, page = 1, callback) {
-  unsplash
-    .get('/api', {
+searchUnslpash = async (searchTerm, page = 1, callback) => {
+  try {
+    res = await unsplash.get('/api', {
       params: {
         query: searchTerm,
         page,
         per_page: 20
       }
-    })
-    .then(res => {
-      callback(res.data.results);
-      console.log(res.data);
-    })
-    .catch(console.log);
-}
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default searchUnslpash;

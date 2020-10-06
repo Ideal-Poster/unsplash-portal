@@ -1,7 +1,10 @@
-import searchUnslpash from './api/requests';
+import SearchBar from './components/SearchBar';
 import ImageList from './components/ImageList';
+import ReactDOM from 'react-dom';
+import React from 'react';
 
-const gridContainer = document.querySelector('#image__list');
-const imageList = new ImageList(gridContainer);
+const domContainer = document.querySelector('#image__list');
+ReactDOM.render(React.createElement(ImageList), domContainer);
 
-searchUnslpash('hello', 1, imageList.renderImages);
+const searchBar = document.querySelector('#search__form');
+new SearchBar(searchBar);
