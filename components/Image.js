@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
-function Image({ src, idx }) {
+function Image({ src, idx, batchIdx }) {
   const [spans, setSpans] = useState(0);
 
   let imageRef = useRef(null);
@@ -32,13 +32,13 @@ function Image({ src, idx }) {
     <ImagesLoaded style={{ gridRowEnd: `span ${spans}` }} background="true" onAlways={calcSpans}>
       <motion.div
         className={`search-result search-result-${idx}`}
-        variants={containerAnimation(idx)}
+        variants={containerAnimation(batchIdx)}
         initial="hidden"
         animate="show"
       >
         <motion.img
           ref={imageRef}
-          variants={imgAnimation(idx)}
+          variants={imgAnimation(batchIdx)}
           initial="hidden"
           animate="show"
           // alt={description}

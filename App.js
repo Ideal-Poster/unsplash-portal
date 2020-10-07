@@ -4,13 +4,13 @@ import ImageList from './components/ImageList';
 import searchUnslpash from './api/requests';
 
 let currentSearch = null;
+let page = 1;
+let isAnimating = false;
 
 function App() {
   const [form, setForm] = useState('');
   const [images, setImages] = useState([]);
-
-  let page = 1;
-  let isAnimating = false;
+  const [batchCount, setBatchCount] = useState(0);
 
   useEffect(() => {
     window.addEventListener('scroll', addPageToResults);
@@ -55,6 +55,7 @@ function App() {
       console.log(response);
       setImages(current => [...current, ...response.results]);
     }
+    setBatchCount(response.results.length);
   };
 
   const shouldRequestPage = () => {
@@ -92,7 +93,7 @@ function App() {
           </form>
         </div>
       </div>
-      <ImageList images={images} />
+      <ImageList images={images} batchCount={batchCount} />
     </>
   );
 }
