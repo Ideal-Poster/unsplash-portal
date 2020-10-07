@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import ImageList from './components/ImageList';
 import searchUnslpash from './api/requests';
@@ -9,33 +9,67 @@ function App() {
   const [form, setForm] = useState('');
   const [images, setImages] = useState([]);
 
+  let page = 1;
+  let isAnimating = false;
+
+  useEffect(() => {
+    window.addEventListener('scroll', addPageToResults);
+  }, []);
+
+  // reference state so it is availble to eventlisteners
+  const imagesRef = useRef(images);
+  const formRef = useRef(form);
+
+  useEffect(() => {
+    imagesRef.current = images;
+  }, [images]);
+
+  useEffect(() => {
+    formRef.current = form;
+  }, [form]);
+  //  ========================
+
   const handleChange = e => {
     setForm(e.target.value);
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    getImages(1);
-  };
-
-  const getImages = async page => {
     if (isFormValid()) {
-      const response = await searchUnslpash(form, page);
-      console.log(page);
-      if (page === 1) {
-        // console.log("1");
-        setImages([]);
-        setImages([...response.results]);
-      } else {
-        // console.log("2");
-        setImages(current => [...current, ...response.results]);
-      }
+      getImages(1);
       currentSearch = form;
     }
   };
 
   const isFormValid = () => {
     return !(!form || form === currentSearch);
+  };
+
+  const getImages = async page => {
+    const response = await searchUnslpash(formRef.current, page);
+    console.log(response);
+    if (page === 1) {
+      await setImages([]);
+      setImages([...response.results]);
+    } else {
+      console.log(response);
+      setImages(current => [...current, ...response.results]);
+    }
+  };
+
+  const shouldRequestPage = () => {
+    return (
+      document.documentElement.scrollHeight === window.pageYOffset + window.innerHeight &&
+      !isAnimating &&
+      imagesRef.current.length > 0
+    );
+  };
+
+  const addPageToResults = () => {
+    if (shouldRequestPage()) {
+      page += 1;
+      getImages(page);
+    }
   };
 
   return (
@@ -52,7 +86,6 @@ function App() {
               name="search"
               onChange={handleChange}
               value={form}
-              // onKeyDown={onKeyDown}
               id="search__form"
               placeholder="Search"
             />
