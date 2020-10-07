@@ -1,19 +1,18 @@
 'use strict';
 import React, { useState, useEffect, useRef } from 'react';
-import imagesLoaded from 'imagesloaded';
+import ImagesLoaded from 'react-images-loaded';
 import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
 function Image({ src, idx }) {
+  const [spans, setSpans] = useState(0);
+
   let imageRef = useRef(null);
   useEffect(() => {
-    imagesLoaded(imageRef.current, calcSpans);
     setResizeSpanListener();
     return removeResizeSpanListener;
   }, []);
-
-  const [spans, setSpans] = useState(0);
 
   const calcSpans = () => {
     const height = imageRef.current.clientHeight;
@@ -30,22 +29,23 @@ function Image({ src, idx }) {
   };
 
   return (
-    <motion.div
-      style={{ gridRowEnd: `span ${spans}` }}
-      className={`search-result search-result-${idx}`}
-      variants={containerAnimation(idx)}
-      initial="hidden"
-      animate="show"
-    >
-      <motion.img
-        ref={imageRef}
-        variants={imgAnimation(idx)}
+    <ImagesLoaded style={{ gridRowEnd: `span ${spans}` }} background="true" onAlways={calcSpans}>
+      <motion.div
+        className={`search-result search-result-${idx}`}
+        variants={containerAnimation(idx)}
         initial="hidden"
         animate="show"
-        // alt={description}
-        src={src}
-      />
-    </motion.div>
+      >
+        <motion.img
+          ref={imageRef}
+          variants={imgAnimation(idx)}
+          initial="hidden"
+          animate="show"
+          // alt={description}
+          src={src}
+        />
+      </motion.div>
+    </ImagesLoaded>
   );
 }
 

@@ -6,7 +6,7 @@ const unsplash = axios.create({
   timeout: 5000
 });
 
-searchUnslpash = async (searchTerm, page = 1, callback) => {
+searchUnslpash = async (searchTerm, page = 1) => {
   try {
     res = await unsplash.get('/api', {
       params: {
