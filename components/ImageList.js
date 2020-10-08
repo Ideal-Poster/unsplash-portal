@@ -7,7 +7,7 @@ function ImageList({ images, batchCount }) {
   const imagesElements = images.map((res, i) => {
     batchIdx <= batchCount ? (batchIdx += 1) : (batchIdx = 0);
     console.log(batchIdx);
-    return <Image key={res.id} src={res.urls.regular} idx={i} batchIdx={batchIdx} />;
+    return <Image key={i} src={res.urls.regular} idx={i} batchIdx={batchIdx} />;
   });
 
   return (

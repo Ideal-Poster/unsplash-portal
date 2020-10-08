@@ -47,7 +47,7 @@ function App() {
 
   const getImages = async page => {
     const response = await searchUnslpash(formRef.current, page);
-    console.log(response);
+    // console.log(response);
     if (page === 1) {
       await setImages([]);
       setImages([...response.results]);

@@ -7,6 +7,7 @@ import { debounce } from '../utils';
 
 function Image({ src, idx, batchIdx }) {
   const [spans, setSpans] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
 
   let imageRef = useRef(null);
   useEffect(() => {
@@ -29,23 +30,24 @@ function Image({ src, idx, batchIdx }) {
   };
 
   return (
-    <ImagesLoaded style={{ gridRowEnd: `span ${spans}` }} background="true" onAlways={calcSpans}>
-      <motion.div
-        className={`search-result search-result-${idx}`}
-        variants={containerAnimation(batchIdx)}
-        initial="hidden"
-        animate="show"
-      >
+    <motion.div
+      style={{ gridRowEnd: `span ${spans}` }}
+      className={`search-result search-result-${idx}`}
+      variants={containerAnimation(batchIdx)}
+      initial="hidden"
+      animate={isRevealed ? 'show' : 'hidden'}
+    >
+      <ImagesLoaded onAlways={calcSpans} done={() => setIsRevealed(true)}>
         <motion.img
           ref={imageRef}
           variants={imgAnimation(batchIdx)}
           initial="hidden"
-          animate="show"
+          animate={isRevealed ? 'show' : 'hidden'}
           // alt={description}
           src={src}
         />
-      </motion.div>
-    </ImagesLoaded>
+      </ImagesLoaded>
+    </motion.div>
   );
 }
 
