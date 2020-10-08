@@ -107,3 +107,23 @@ input:focus {
   background: #c43149;
   padding: 10px;
 }
+
+.loading {
+  position: fixed;
+  top: 50vh;
+  bottom: 50px;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 0 0 0 -20px;
+  border: 8px solid #383a41;
+  border-bottom-color: #565963;
+  border-radius: 50%;
+  animation: animLoader 0.8s linear infinite forwards;
+}
+
+@keyframes animLoader {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -11,6 +11,7 @@ function App() {
   const [form, setForm] = useState('');
   const [images, setImages] = useState([]);
   const [batchCount, setBatchCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.addEventListener('scroll', addPageToResults);
@@ -56,6 +57,7 @@ function App() {
       setImages(current => [...current, ...response.results]);
     }
     setBatchCount(response.results.length);
+    setIsLoading(true);
   };
 
   const shouldRequestPage = () => {
@@ -93,7 +95,7 @@ function App() {
           </form>
         </div>
       </div>
-      <ImageList images={images} batchCount={batchCount} />
+      <ImageList setIsLoading={setIsLoading} isLoading={isLoading} images={images} batchCount={batchCount} />
     </>
   );
 }
