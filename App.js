@@ -5,13 +5,13 @@ import searchUnslpash from './api/requests';
 
 let currentSearch = null;
 let page = 1;
-let isAnimating = false;
 
 function App() {
   const [form, setForm] = useState('');
   const [images, setImages] = useState([]);
   const [batchCount, setBatchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnimating, setIsAnimamting] = useState(false);
 
   useEffect(() => {
     window.addEventListener('scroll', addPageToResults);
@@ -43,12 +43,12 @@ function App() {
   };
 
   const isFormValid = () => {
-    return !(!form || form === currentSearch);
+    return !!form || form !== currentSearch || !isAnimating;
   };
 
   const getImages = async page => {
+    setIsLoading(true);
     const response = await searchUnslpash(formRef.current, page);
-    // console.log(response);
     if (page === 1) {
       await setImages([]);
       setImages([...response.results]);
@@ -57,7 +57,6 @@ function App() {
       setImages(current => [...current, ...response.results]);
     }
     setBatchCount(response.results.length);
-    setIsLoading(true);
   };
 
   const shouldRequestPage = () => {
@@ -95,7 +94,13 @@ function App() {
           </form>
         </div>
       </div>
-      <ImageList setIsLoading={setIsLoading} isLoading={isLoading} images={images} batchCount={batchCount} />
+      <ImageList
+        setIsAnimamting={setIsAnimamting}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
+        images={images}
+        batchCount={batchCount}
+      />
     </>
   );
 }

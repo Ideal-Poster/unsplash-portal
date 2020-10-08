@@ -15,6 +15,8 @@ searchUnslpash = async (searchTerm, page = 1) => {
         per_page: 20
       }
     });
+    console.log(res.data);
+
     return res.data;
   } catch (error) {
     console.log(error);

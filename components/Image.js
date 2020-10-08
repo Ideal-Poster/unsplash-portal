@@ -5,12 +5,13 @@ import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
-function Image({ src, idx, batchIdx, setIsLoading }) {
+function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
   const [spans, setSpans] = useState(0);
-  const [isRevealed, setIsRevealed] = useState(false);
+  // const [isRevealed, setIsRevealed] = useState(false);
 
   let imageRef = useRef(null);
   useEffect(() => {
+    calcSpans();
     setResizeSpanListener();
     return removeResizeSpanListener;
   }, []);
@@ -29,11 +30,6 @@ function Image({ src, idx, batchIdx, setIsLoading }) {
     window.removeEventListener('resize', setSpans);
   };
 
-  const imageLoaded = () => {
-    setIsLoading(false);
-    setIsRevealed(true);
-  };
-
   return (
     <motion.div
       style={{ gridRowEnd: `span ${spans}` }}
@@ -42,7 +38,7 @@ function Image({ src, idx, batchIdx, setIsLoading }) {
       initial="hidden"
       animate={isRevealed ? 'show' : 'hidden'}
     >
-      <ImagesLoaded onAlways={calcSpans} done={() => imageLoaded()}>
+      <ImagesLoaded onAlways={calcSpans} done={() => setIsLoading(false)}>
         <motion.img
           ref={imageRef}
           variants={imgAnimation(batchIdx)}
