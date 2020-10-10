@@ -54,7 +54,7 @@ input:focus {
 
 /* Scroll to top button */
 #button {
-  display: none;
+  /* display: none; */
   position: fixed;
   right: 40px;
   bottom: 20px;

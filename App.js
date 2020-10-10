@@ -12,9 +12,10 @@ function App() {
   const [batchCount, setBatchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isAnimating, setIsAnimamting] = useState(false);
+  const [isButtonShown, setIsButtonShown] = useState(false);
 
   useEffect(() => {
-    window.addEventListener('scroll', addPageToResults);
+    window.addEventListener('scroll', scrollHandler);
   }, []);
 
   // reference state so it is availble to eventlisteners
@@ -40,6 +41,15 @@ function App() {
       getImages(1);
       currentSearch = form;
     }
+  };
+
+  const scrollHandler = () => {
+    addPageToResults();
+    toggleScrollButton();
+  };
+
+  const toggleScrollButton = () => {
+    window.pageYOffset > 400 ? setIsButtonShown(true) : setIsButtonShown(false);
   };
 
   const isFormValid = () => {
@@ -100,6 +110,7 @@ function App() {
         isLoading={isLoading}
         images={images}
         batchCount={batchCount}
+        isButtonShown={isButtonShown}
       />
     </>
   );
