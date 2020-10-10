@@ -5,9 +5,8 @@ import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
-function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
+function Image({ idx, batchIdx, setIsLoading, isRevealed, imageObj, openModal }) {
   const [spans, setSpans] = useState(0);
-  // const [isRevealed, setIsRevealed] = useState(false);
 
   let imageRef = useRef(null);
   useEffect(() => {
@@ -17,9 +16,11 @@ function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
   }, []);
 
   const calcSpans = () => {
-    const height = imageRef.current.clientHeight;
-    const spans = Math.ceil(height / 100 + 0.5);
-    setSpans(spans);
+    if (imageRef.current) {
+      const height = imageRef.current.clientHeight;
+      const spans = Math.ceil(height / 100 + 0.5);
+      setSpans(spans);
+    }
   };
 
   const setResizeSpanListener = () => {
@@ -45,7 +46,8 @@ function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
           initial="hidden"
           animate={isRevealed ? 'show' : 'hidden'}
           // alt={description}
-          src={src}
+          src={imageObj.urls.regular}
+          onClick={() => openModal(imageObj)}
         />
       </ImagesLoaded>
     </motion.div>
