@@ -7,7 +7,7 @@ import Modal from './Modal';
 function ImageList({ images, batchCount, isLoading, setIsLoading, setIsAnimamting }) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let batchIdx = 0;
 
