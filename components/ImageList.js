@@ -67,11 +67,11 @@ function ImageList({
     <div id="image__list">
       {imagesElements}
       {isLoading && <div className="loader loading" />}
-      {isButtonShown && (
+      {
         <div id="button" onClick={scrollToTop}>
           <div className="arrow left"></div>
         </div>
-      )}
+      }
       <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} selectedImage={selectedImage} />
     </div>
   );

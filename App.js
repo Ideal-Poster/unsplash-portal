@@ -11,7 +11,7 @@ function App() {
   const [images, setImages] = useState([]);
   const [batchCount, setBatchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isButtonShown, setIsButtonShown] = useState(false);
+  const [isButtonShown, setIsButtonShown] = useState(true);
   const [loadedImages, setLoadedImages] = useState([]);
   const [latestResponse, setLatestResponse] = useState([]);
 

@@ -199,10 +199,10 @@ input:focus {
 }
 
 #button {
-  display: none;
+  /* display: none; */
   position: fixed;
   right: 40px;
-  bottom: 20px;
+  bottom: 30px;
   height: 40px;
   width: 40px;
   border-radius: 50px;
