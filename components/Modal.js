@@ -17,11 +17,11 @@ function Modal({ selectedImage, isOpen, setIsOpen }) {
       >
         <div>
           <button onClick={() => setIsOpen(false)} className="content__back" aria-label="Back to main view" />
-          <div className="intro">
+          <div className="modal__container">
             {selectedImage && (
               <>
                 <motion.img
-                  id="modal-image"
+                  id="modal__image"
                   src={selectedImage.urls.regular}
                   alt="woot"
                   variants={imageAnimation}
