@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import Modal from './Modal';
 import Image from './Image';
 
 function ImageList({
@@ -13,7 +14,8 @@ function ImageList({
   latestResponse
 }) {
   const [areImagesLoaded, setAreImagesLoaded] = useState(false);
-
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   let batchIdx = 0;
 
   useEffect(() => {
@@ -29,6 +31,12 @@ function ImageList({
       setIsLoading(false);
     }
   };
+
+  const openModal = imageObj => {
+    setSelectedImage(imageObj);
+    setIsModalOpen(true);
+  };
+
   // Scroll button action
   const scrollToTop = () => {
     window.scrollTo({
@@ -37,7 +45,6 @@ function ImageList({
       behavior: 'smooth'
     });
   };
-
   const imagesElements = images.map((res, i) => {
     // new images appended have batch index for animation purposes
     batchIdx <= batchCount ? (batchIdx += 1) : (batchIdx = 0);
@@ -45,12 +52,13 @@ function ImageList({
       <Image
         imageObj={res}
         key={i}
-        src={res.urls.regular}
+        imageObj={res}
         idx={i}
         batchIdx={batchIdx}
         setLoadedImages={setLoadedImages}
         latestResponse={latestResponse}
         areImagesLoaded={areImagesLoaded}
+        openModal={openModal}
       />
     );
   });
@@ -64,6 +72,7 @@ function ImageList({
           <div className="arrow left"></div>
         </div>
       )}
+      <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} selectedImage={selectedImage} />
     </div>
   );
 }

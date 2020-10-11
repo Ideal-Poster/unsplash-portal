@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
-function Image({ src, idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded, latestResponse }) {
+function Image({ src, idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded, latestResponse, openModal }) {
   const [spans, setSpans] = useState(0);
 
   let imageRef = useRef(null);
@@ -28,9 +28,11 @@ function Image({ src, idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded,
   };
 
   const calcSpans = () => {
-    const height = imageRef.current.clientHeight;
-    const spans = Math.ceil(height / 100 + 0.5);
-    setSpans(spans);
+    if (imageRef.current) {
+      const height = imageRef.current.clientHeight;
+      const spans = Math.ceil(height / 100 + 0.5);
+      setSpans(spans);
+    }
   };
 
   const setResizeSpanListener = () => {
@@ -59,7 +61,8 @@ function Image({ src, idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded,
           setLoadedImages(current => [...current, imageObj]);
         }}
         // alt={description}
-        src={src}
+        src={imageObj.urls.regular}
+        onClick={() => openModal(imageObj)}
       />
     </motion.div>
   );
