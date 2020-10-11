@@ -11,14 +11,16 @@ function App() {
   const [images, setImages] = useState([]);
   const [batchCount, setBatchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isAnimating, setIsAnimamting] = useState(false);
   const [isButtonShown, setIsButtonShown] = useState(false);
+  const [loadedImages, setLoadedImages] = useState([]);
+  const [latestResponse, setLatestResponse] = useState([]);
 
   useEffect(() => {
     window.addEventListener('scroll', scrollHandler);
   }, []);
 
   // reference state so it is availble to eventlisteners
+  //=====================================================
   const imagesRef = useRef(images);
   const formRef = useRef(form);
 
@@ -29,7 +31,7 @@ function App() {
   useEffect(() => {
     formRef.current = form;
   }, [form]);
-  //  ========================
+  //=====================================================
 
   const handleChange = e => {
     setForm(e.target.value);
@@ -60,19 +62,22 @@ function App() {
     setIsLoading(true);
     const response = await searchUnslpash(formRef.current, page);
     if (page === 1) {
-      await setImages([]);
+      setImages([]);
       setImages([...response.results]);
     } else {
-      console.log(response);
       setImages(current => [...current, ...response.results]);
     }
     setBatchCount(response.results.length);
+    setLatestResponse(response.results);
   };
 
   const shouldRequestPage = () => {
     return (
+      // is user scrolled to bottom of page?
       document.documentElement.scrollHeight === window.pageYOffset + window.innerHeight &&
-      !isAnimating &&
+      // are images still in the proccess of being displayed on screen?
+      !isLoading &&
+      // are there photos to be displayed?
       imagesRef.current.length > 0
     );
   };
@@ -105,12 +110,14 @@ function App() {
         </div>
       </div>
       <ImageList
-        setIsAnimamting={setIsAnimamting}
         setIsLoading={setIsLoading}
         isLoading={isLoading}
         images={images}
         batchCount={batchCount}
         isButtonShown={isButtonShown}
+        loadedImages={loadedImages}
+        setLoadedImages={setLoadedImages}
+        latestResponse={latestResponse}
       />
     </>
   );

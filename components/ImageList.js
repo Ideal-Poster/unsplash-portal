@@ -1,17 +1,35 @@
 import React, { useState, useEffect } from 'react';
 
 import Image from './Image';
-import ImagesLoaded from 'react-images-loaded';
 
-function ImageList({ images, batchCount, isLoading, setIsLoading, setIsAnimamting, isButtonShown }) {
-  const [isRevealed, setIsRevealed] = useState(false);
-  // const [ isButtonShown, setIsButtonShown ] = useState(true);
+function ImageList({
+  images,
+  batchCount,
+  isLoading,
+  setIsLoading,
+  isButtonShown,
+  loadedImages,
+  setLoadedImages,
+  latestResponse
+}) {
+  const [areImagesLoaded, setAreImagesLoaded] = useState(false);
+
   let batchIdx = 0;
 
-  // useEffect(() =>{
-  //   window.addEventListener('scroll')
-  // }, []);
+  useEffect(() => {
+    _areImagesLoaded();
+  }, [loadedImages]);
 
+  // are all images loaded and ready to be displayed?
+  const _areImagesLoaded = () => {
+    // are images for latest request loaded?
+    const result = latestResponse.every(img => loadedImages.includes(img));
+    if (result && !!loadedImages.length) {
+      setAreImagesLoaded(result);
+      setIsLoading(false);
+    }
+  };
+  // Scroll button action
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -21,40 +39,32 @@ function ImageList({ images, batchCount, isLoading, setIsLoading, setIsAnimamtin
   };
 
   const imagesElements = images.map((res, i) => {
+    // new images appended have batch index for animation purposes
     batchIdx <= batchCount ? (batchIdx += 1) : (batchIdx = 0);
-    console.log(batchIdx);
     return (
       <Image
-        isRevealed={isRevealed}
+        imageObj={res}
         key={i}
         src={res.urls.regular}
         idx={i}
         batchIdx={batchIdx}
-        setIsLoading={setIsLoading}
+        setLoadedImages={setLoadedImages}
+        latestResponse={latestResponse}
+        areImagesLoaded={areImagesLoaded}
       />
     );
   });
 
   return (
-    <ImagesLoaded
-      id="image__list"
-      done={() => {
-        setIsAnimamting(false);
-        setIsRevealed(true);
-        setIsLoading(false);
-      }}
-      background=".search-result"
-    >
+    <div id="image__list">
       {imagesElements}
-
       {isLoading && <div className="loader loading" />}
-
       {isButtonShown && (
         <div id="button" onClick={scrollToTop}>
-          <div class="arrow left"></div>
+          <div className="arrow left"></div>
         </div>
       )}
-    </ImagesLoaded>
+    </div>
   );
 }
 

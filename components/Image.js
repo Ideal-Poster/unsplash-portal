@@ -1,13 +1,11 @@
 'use strict';
 import React, { useState, useEffect, useRef } from 'react';
-import ImagesLoaded from 'react-images-loaded';
 import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
-function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
+function Image({ src, idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded, latestResponse }) {
   const [spans, setSpans] = useState(0);
-  // const [isRevealed, setIsRevealed] = useState(false);
 
   let imageRef = useRef(null);
   useEffect(() => {
@@ -15,6 +13,19 @@ function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
     setResizeSpanListener();
     return removeResizeSpanListener;
   }, []);
+
+  const isShown = () => {
+    // if not loaded and not to be newly appended
+    if (!areImagesLoaded && !latestResponse.includes(imageObj)) {
+      return 'none';
+      // if not loaded and is to be newly appended
+    } else if (!areImagesLoaded && latestResponse.includes(imageObj)) {
+      return 'hidden';
+      // if loaded and is to be newly appended
+    } else if (areImagesLoaded && latestResponse.includes(imageObj)) {
+      return 'show';
+    }
+  };
 
   const calcSpans = () => {
     const height = imageRef.current.clientHeight;
@@ -36,18 +47,20 @@ function Image({ src, idx, batchIdx, setIsLoading, isRevealed }) {
       className={`search-result search-result-${idx}`}
       variants={containerAnimation(batchIdx)}
       initial="hidden"
-      animate={isRevealed ? 'show' : 'hidden'}
+      animate={isShown()}
     >
-      <ImagesLoaded onAlways={calcSpans} done={() => setIsLoading(false)}>
-        <motion.img
-          ref={imageRef}
-          variants={imgAnimation(batchIdx)}
-          initial="hidden"
-          animate={isRevealed ? 'show' : 'hidden'}
-          // alt={description}
-          src={src}
-        />
-      </ImagesLoaded>
+      <motion.img
+        ref={imageRef}
+        variants={imgAnimation(batchIdx)}
+        initial="hidden"
+        animate={isShown()}
+        onLoad={() => {
+          calcSpans();
+          setLoadedImages(current => [...current, imageObj]);
+        }}
+        // alt={description}
+        src={src}
+      />
     </motion.div>
   );
 }
