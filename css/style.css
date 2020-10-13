@@ -13,6 +13,11 @@ html {
   font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
+#error {
+  width: 100vw;
+  text-align: center;
+}
+
 #title__text {
   padding-left: 40px;
   padding-top: 20px;

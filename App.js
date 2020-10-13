@@ -14,6 +14,7 @@ function App() {
   const [isButtonShown, setIsButtonShown] = useState(false);
   const [loadedImages, setLoadedImages] = useState([]);
   const [latestResponse, setLatestResponse] = useState([]);
+  const [isErrorMessage, setIsErrorMessage] = useState(false);
 
   useEffect(() => {
     window.addEventListener('scroll', scrollHandler);
@@ -60,11 +61,15 @@ function App() {
 
   const getImages = async page => {
     setIsLoading(true);
+    setIsErrorMessage(false);
     const response = await searchUnslpash(formRef.current, page);
-    if (page === 1) {
+    if (response.results.length === 0) {
+      setIsErrorMessage(true);
+      setIsLoading(false);
+    } else if (page === 1) {
       setImages([]);
       setImages([...response.results]);
-    } else {
+    } else if (page > 1) {
       setImages(current => [...current, ...response.results]);
     }
     setBatchCount(response.results.length);
@@ -109,6 +114,9 @@ function App() {
           </form>
         </div>
       </div>
+
+      {isErrorMessage && <p id="error">No photos to display</p>}
+
       <ImageList
         setIsLoading={setIsLoading}
         isLoading={isLoading}

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import { debounce } from '../utils';
 
-function Image({ src, idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded, latestResponse, openModal }) {
+function Image({ idx, batchIdx, setLoadedImages, imageObj, areImagesLoaded, latestResponse, openModal }) {
   const [spans, setSpans] = useState(0);
 
   let imageRef = useRef(null);

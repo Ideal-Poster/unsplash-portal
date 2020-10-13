@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "parcel index.html",
     "proxy": "nodemon proxy",
-    "build": "parcel build index.mjs"
+    "build": "parcel build index.mjs",
+    "start": "parcel index.html"
   },
   "devDependencies": {
     "husky": "^1.1.2",
@@ -33,6 +34,7 @@
     "framer-motion": "^2.7.7",
     "http-proxy-middleware": "^1.0.5",
     "morgan": "^1.10.0",
+    "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-images-loaded": "^2.0.0"
