@@ -8,7 +8,7 @@
     "module": "commonjs"
   },
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail \"parcel index.html\"  \"nodemon proxy\"",
+    "dev": "parcel index.html",
     "proxy": "nodemon proxy",
     "build": "parcel build index.mjs"
   },

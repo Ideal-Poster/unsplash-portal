@@ -2,13 +2,14 @@ import axios from 'axios';
 
 const { PROXY_HOST, PROXY_PORT } = process.env;
 const unsplash = axios.create({
-  baseURL: PROXY_HOST + PROXY_PORT || 'http://localhost:5000',
-  timeout: 5000
+  baseURL: 'https://api.unsplash.com/search/photos',
+  timeout: 5000,
+  headers: { Authorization: `Client-ID 74a2c2a5faba167281d63307340fdff8925b30337319ec1e95471ab93ebea12b` }
 });
 
 searchUnslpash = async (searchTerm, page = 1) => {
   try {
-    res = await unsplash.get('/api', {
+    res = await unsplash.get('/', {
       params: {
         query: searchTerm,
         page,
