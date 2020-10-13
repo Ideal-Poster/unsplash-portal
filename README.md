@@ -11,4 +11,4 @@ This project uses.
 - Node (Proxy server used to hide api key)
 - Express
 - Axios
-
+- Framer-Motion
