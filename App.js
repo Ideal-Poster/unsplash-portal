@@ -66,6 +66,7 @@ function App() {
     if (response.results.length === 0) {
       setIsErrorMessage(true);
       setIsLoading(false);
+      setImages([]);
     } else if (page === 1) {
       setImages([]);
       setImages([...response.results]);
